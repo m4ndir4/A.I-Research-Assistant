@@ -1,4 +1,4 @@
-# AI Research Assistant - Streamlit Application
+# AI Research Assistant - 
 
 ## Overview
 
