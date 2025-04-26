@@ -1,89 +1,126 @@
-# AI Research Assistant - 
 
-## Overview
+# AI Research Assistant - Project Documentation
 
-This application is an AI-powered research assistant built using Streamlit, designed to help users perform comprehensive research, generate literature reviews, identify research gaps, and format references in various citation styles. The application integrates multiple agents to assist with research tasks, leveraging OpenAI and Tavily APIs for intelligent analysis and drafting.
+## 1. Project Overview
+The AI Research Assistant is an AI-powered tool designed to automate key aspects of the research process, such as finding research papers, generating literature reviews, identifying research gaps, and formatting citations. This tool integrates OpenAI API and Tavily API to enhance the efficiency and productivity of researchers. It streamlines the research workflow, allowing researchers to focus on critical tasks while AI handles the repetitive and time-consuming processes.
 
-## Key Components
+## 2. Key Features
 
-1. **Environment Setup**:
-   - The application uses the `.env` file to store essential API keys (OpenAI and Tavily). These keys are required to interact with the APIs for research, analysis, and drafting tasks.
-   - It ensures that both API keys are present before proceeding with the application.
+### Research Paper Search:
+**How it works:** The application uses Tavily API to fetch research papers based on user input. The papers are retrieved from a variety of academic sources and are tailored to match the user’s query.  
+Traditional paper searches require manual filtering and reading. This tool automates the retrieval process, curating the most relevant and impactful research papers, saving time, and increasing the efficiency of literature searches.
 
-2. **Session State**:
-   - The application initializes session states to store and manage the user's progress across different research tasks:
-     - `sources`: A list of research sources retrieved from the search results.
-     - `citation_style`: Stores the selected citation style for formatting references (APA, MLA, Chicago, etc.).
-     - `literature_review`: Holds the generated literature review.
-     - `research_gaps`: Holds identified research gaps.
-     - `references_list`: Stores the formatted list of references based on the selected citation style.
-     - `search_completed`: Flag to track if the research process has been completed.
-     - `paper_summary_table`: Stores a summary table of the papers reviewed.
+### Literature Review Generation:
+**How it works:** The AI analyzes the content of the fetched research papers and creates a structured literature review, categorizing the papers into relevant themes and summarizing key insights.  
+Literature reviews are a critical yet time-consuming part of the research process. This feature automates it, organizing research into digestible sections, allowing researchers to focus on analysis rather than content summarization.
 
-3. **Agent Initialization**:
-   - Multiple agents are initialized to handle different tasks:
-     - `ResearchAgent`: Responsible for finding relevant research papers based on a search query.
-     - `AnalysisAgent`: Performs in-depth analysis of the search results.
-     - `DraftingAgent`: Helps with drafting and refining research content.
-     - `LiteratureReviewAgent`: Creates a thematic literature review based on the sources.
-     - `ResearchGapsAgent`: Identifies research gaps from the generated literature review.
+### Research Gap Identification:
+**How it works:** By analyzing the generated literature review, the system identifies unexplored areas in the field. These research gaps are presented clearly for the user.  
+Identifying research gaps can be subjective and difficult. This tool uses AI to automatically flag gaps in the literature, providing clear direction for future research.
 
-4. **Research Workflow**:
-   - The `create_research_workflow` function organizes these agents into a cohesive workflow that facilitates the automatic completion of tasks like research paper search, literature review generation, research gap identification, and reference formatting.
+### Citation Style Formatting:
+**How it works:** The tool formats references according to multiple citation styles such as APA, MLA, and Chicago.  
+Citation formatting is automated, ensuring that references are consistent and error-free. This is particularly useful for large projects with numerous citations, eliminating the need for manual formatting.
 
-5. **Page Setup**:
-   - **Streamlit Page Configuration**:
-     - The application uses `st.set_page_config` to set the page title, icon, layout, and sidebar state.
-   
-   - **Sidebar**:
-     - The sidebar displays the list of research sources, citation style selection, and a section for viewing and downloading the formatted references list.
-   
-   - **Main Content**:
-     - The main content area features tabs for different functionalities:
-       - **Research Papers Tab**: Allows users to search for research papers by entering a query. It automatically displays the search results, generates a literature review, and identifies research gaps.
-       - **Literature Review Tab**: Displays the generated literature review based on the sources collected in the research tab. It also displays a paper summary table.
-       - **Research Gaps Tab**: Identifies and displays the gaps in the current research from the literature review.
-       - **References Tab**: Lets users select the citation style (APA, MLA, etc.) and view the formatted references list. It also provides an option to download the references list.
+## 3. Technologies Used
 
----
+The application utilizes various advanced technologies to achieve its functionality:
 
-## Detailed Explanation of Functionalities
+**Backend AI:**
+- **OpenAI API:** Powers the text analysis and generation aspects of the project. It enables the drafting of summaries, identification of research gaps, and citation formatting.
+- **Tavily API:** Fetches research papers based on the user’s query. Tavily allows for academic-grade results that are curated and relevant to the user’s input.
 
-### 1. **Research Papers Tab**:
+**Libraries:**
+- **requests:** Used for making API calls to external services.
+- **pandas:** For data management, organizing and processing the fetched papers and generating reports.
+- **dotenv:** Securely handles environment variables, ensuring that sensitive API keys remain protected.
 
-#### Search for Research Papers:
-- Users can input a research question in a text box.
-- Upon clicking "Search Research Papers," the `research_agent` is triggered to search for research papers related to the query. The search results are displayed in the form of paper titles, URLs, content, and other details.
+## 4. Installation Guide
 
-#### Automatic Tasks:
-- **Literature Review Generation**: After fetching the research papers, the `literature_review_agent` generates a thematic literature review using the sources retrieved.
-- **Research Gaps Identification**: The `research_gaps_agent` identifies research gaps from the literature review.
-- **Paper Summary Table**: The `literature_review_agent` also creates a summary table of the reviewed papers.
+Here’s how you can set up the AI Research Assistant locally:
 
-### 2. **Literature Review Tab**:
-- **Generate Literature Review**: Users can click a button to regenerate the literature review based on the current sources. If the review generation is successful, it is displayed as a table with a summary of each paper.
+1. Clone the Repository:
+   ```bash
+   git clone https://github.com/yourusername/ai-research-assistant.git
+   cd ai-research-assistant
+   ```
 
-### 3. **Research Gaps Tab**:
-- **Identify Research Gaps**: Users can regenerate the research gaps by clicking a button. The system identifies gaps based on the literature review generated in the previous step.
+2. Set up Virtual Environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use: venv\Scripts\activate
+   ```
 
-### 4. **References Tab**:
-- **Citation Style Selection**: Users can select a citation style (APA, MLA, Chicago, Harvard, IEEE). Upon selection, the application regenerates the formatted references list according to the new style.
-- **Formatted References**: The references list is shown in the selected citation style. It can be downloaded as a `.txt` file.
+3. Install Dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
----
+4. Set up Environment Variables:
+   - Create a `.env` file in the root directory and add your API keys:
+   ```bash
+   OPENAI_API_KEY=your_openai_api_key
+   TAVILY_API_KEY=your_tavily_api_key
+   ```
 
-## Code Explanation
+5. Run the Application:
+   ```bash
+   python app.py
+   ```
 
-### Environment Variables & API Keys
-- The application relies on two API keys, OpenAI and Tavily. These keys are loaded from the `.env` file using `load_dotenv()`. If either of the keys is missing, an error is displayed, and the application stops.
+## 5. Project Structure
 
+Here’s the structure of the project and an overview of key files:
+
+- `app.py`: Main application logic that coordinates the research process and handles user inputs.
+- `agents.py`: Contains agent classes responsible for different functionalities such as fetching papers, generating summaries, and formatting citations.
+- `utils.py`: Utility functions for managing data and assisting with background tasks.
+- `.env`: Stores API keys securely.
+- `requirements.txt`: Lists dependencies needed for the project.
+- `assets/`: Folder containing static assets, such as images or data files.
+
+## 6. Application Workflow
+
+The AI Research Assistant operates through a straightforward workflow that automates essential research tasks:
+
+1. **Search for Research Papers:** The user inputs a query, and the system fetches relevant academic papers using the Tavily API.
+
+2. **Generate Literature Review:** The AI analyzes the fetched papers and organizes them into a structured literature review, summarizing key insights and categorizing the information into thematic sections.
+
+3. **Identify Research Gaps:** The system scans the generated review to identify unexplored research areas, providing clear suggestions for new research directions.
+
+4. **Citation Style Formatting:** The references in the literature review are formatted according to the selected citation style (APA, MLA, Chicago, etc.).
+
+5. **Download References:** The references can be exported as a `.txt` file for easy use in research papers.
+
+## 7. Code Explanation
+
+### Environment Setup:
+The application uses dotenv to manage sensitive information like API keys securely:
 ```python
 load_dotenv()
+if not os.getenv('OPENAI_API_KEY'):
+    raise ValueError('OpenAI API key not found. Please set OPENAI_API_KEY in your .env file.')
+if not os.getenv('TAVILY_API_KEY'):
+    raise ValueError('Tavily API key not found. Please set TAVILY_API_KEY in your .env file.')
+```
 
-if not os.getenv("OPENAI_API_KEY"):
-    st.error("OpenAI API key not found. Please set OPENAI_API_KEY in your .env file.")
-    st.stop()
+### Session Management:
+Streamlit's session state is used to manage user data across different steps in the research process:
+```python
+if 'sources' not in st.session_state:
+    st.session_state.sources = []
+if 'citation_style' not in st.session_state:
+    st.session_state.citation_style = 'APA'
+```
 
-if not os.getenv("TAVILY_API_KEY"):
-    st.error("Tavily API key not found. Please set TAVILY_API_KEY in your .env file.")
-    st.stop()
+### Agent Classes:
+The system uses different agent classes for specific tasks:
+- `ResearchAgent`: Fetches relevant research papers.
+- `AnalysisAgent`: Analyzes the content of the papers.
+- `DraftingAgent`: Assists in drafting the literature review sections.
+- `ResearchGapsAgent`: Identifies unexplored research areas.
+
+## 8. Conclusion
+
+The AI Research Assistant simplifies and accelerates the research process through automation. With AI-driven features like paper search, literature review generation, research gap identification, and citation formatting, the tool allows researchers to focus on higher-level thinking while the application handles time-consuming tasks. This not only improves efficiency but also ensures consistency and accuracy throughout the research lifecycle. With this project, you can demonstrate technical capabilities in integrating AI models, APIs, and data processing to create an impactful research tool.
